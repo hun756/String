@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <stdlib.h>
 
 #include "string.hpp"
 #include "stringConfig.h"
@@ -11,7 +10,7 @@
  */
 int main()
 {
-    std::cout << "C++ Boiler Plate v" << PROJECT_VERSION_MAJOR << "."
+    std::cout << "C++ String Library" << PROJECT_VERSION_MAJOR << "."
             << PROJECT_VERSION_MINOR << std::endl;
 
 
