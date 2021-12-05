@@ -38,3 +38,7 @@ build/
 # Doxygen output
 html/
 latex/
+
+# Editor
+.idea/
+.vscode/
