@@ -5,7 +5,7 @@
 #
 # For many purposes, you may not need to change anything about this file.
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.2)
 
 # Set project name here.
 project(CPP_STRING)
@@ -34,7 +34,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 # Set debug/coverage flags, or optimize, depending on options.
 if (debug)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-reorder")  
     # Coverage can only be set if -g is used.
     if (coverage)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
@@ -90,27 +91,6 @@ add_custom_target(gtest
     COMMAND "${PROJECT_BINARY_DIR}/${TEST_MAIN}"
     DEPENDS engine ${TEST_MAIN})
 
-
-# Add a standard make target 'test' that runs the tests under CTest (only as an alt. to gtest).
-include(CTest)
-enable_testing()
-add_test(unit_tests ${PROJECT_BINARY_DIR}/${TEST_MAIN})
-
-
-# --------------------------------------------------------------------------------
-#                         Documentation (no change needed).
-# --------------------------------------------------------------------------------
-# Add a make target 'doc' to generate API documentation with Doxygen.
-# You should set options to your liking in the file 'Doxyfile.in'.
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-    add_custom_target(doc ALL
-        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile &> doxygen.log
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMENT "Generating API documentation with Doxygen" VERBATIM
-        )
-endif(DOXYGEN_FOUND)
 
 
 # --------------------------------------------------------------------------------
