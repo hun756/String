@@ -42,3 +42,6 @@ latex/
 # Editor
 .idea/
 .vscode/
+
+# Clang d Cache
+.cache/
