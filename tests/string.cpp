@@ -7,7 +7,7 @@ TEST(String, CStrConstrucorTest)
 {
     struct TestStruct
     {
-        mutable kor::String<char> str;
+        mutable kor::String str;
         size_t acutal_capacity;
         size_t actual_size;
         std::unique_ptr<char[]> _toActualArray;
@@ -47,11 +47,11 @@ TEST(String, CStrConstrucorTest)
  */
 TEST(String, CheckEmpty)
 {
-    kor::String<char> ch1;
-    kor::String<char> ch2 {};
+    kor::String ch1;
+    kor::String ch2 {};
     // fix this bug
-    // kor::String<char> ch3 {""};
-    kor::String<char> ch4 {"a"};
+    // kor::String ch3 {""};
+    kor::String ch4 {"a"};
 
     ASSERT_TRUE(ch1.empty());
     ASSERT_TRUE(ch2.empty());
@@ -63,7 +63,7 @@ TEST(String, SizeControl)
 {
     struct TestStruct
     {
-        kor::String<char> str;
+        kor::String str;
         size_t actual_length;
 
         TestStruct(const std::string& s_name, const size_t _actual_l) : str(s_name.c_str()), actual_length(_actual_l) {}

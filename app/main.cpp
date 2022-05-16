@@ -13,7 +13,7 @@ int main()
     std::cout << "C++ String Library" << PROJECT_VERSION_MAJOR << "."
             << PROJECT_VERSION_MINOR << std::endl;
 
-    kor::String<char> str {"merhaba"};
+    kor::String str{"merhaba"};
 
     std::cout << str.c_str() << std::endl;
     std::cout << str.size() << std::endl;
