@@ -50,6 +50,18 @@ int main()
     {
         std::cout << *value << std::endl;
     }
+
+    std::cout << "try reverse iterator..!" << std::endl;
+     for (auto value = str.rbegin(); value != str.rend(); ++value)
+    {
+        std::cout << *value << std::endl;
+    }
+
+    std::cout << "try reverse iterator..!" << std::endl;
+     for (kor::String::const_reverse_iterator value = str.rbegin(); value != str.rend(); ++value)
+    {
+        std::cout << *value << std::endl;
+    }
     
     return EXIT_SUCCESS;
 } 

@@ -388,6 +388,356 @@ namespace kor
     {
         return const_cast<charType *>(Base::operator->());
     }
+
+    template <typename charType>
+    class ConstReverseIterator
+    {
+    public:
+        ConstReverseIterator();
+
+        /**
+         *  @brief
+         *      Construct a new Const Reverse Iterator object.
+         *
+         * @param[in] initLock
+         **/
+        ConstReverseIterator(charType *);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix).
+         *
+         *  @return ConstReverseIterator&
+         **/
+        ConstReverseIterator &operator++();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return ConstReverseIterator&
+         **/
+        ConstReverseIterator &operator++(int);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return ConstReverseIterator&
+         **/
+        ConstReverseIterator &operator--();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return ConstReverseIterator&
+         **/
+        ConstReverseIterator &operator--(int);
+
+        /**
+         *  @brief
+         *      Overloading operator *
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        const charType &operator*() const;
+
+        /**
+         *  @brief
+         *      overloading operator ->
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType *operator->() const;
+
+        /**
+         *  @brief
+         *
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator!=(const ConstReverseIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator==(const ConstReverseIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator<(const ConstReverseIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator>(const ConstReverseIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator<=(const ConstReverseIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @return
+         *      !(current == rhs.current)
+         **/
+        bool operator>=(const ConstReverseIterator &) const;
+
+    private:
+        const charType *current;
+    };
+
+    // implementation from ConstReverseIterator
+    template <typename charType>
+    ConstReverseIterator<charType>::ConstReverseIterator() : current(nullptr)
+    {
+    }
+
+    template <typename charType>
+    ConstReverseIterator<charType>::ConstReverseIterator(charType *initLock)
+    {
+        current = initLock;
+    }
+
+    template <typename charType>
+    ConstReverseIterator<charType> &ConstReverseIterator<charType>::operator++()
+    {
+        --current;
+        return *this;
+    }
+
+    template <typename charType>
+    ConstReverseIterator<charType> &ConstReverseIterator<charType>::operator++(int)
+    {
+        ConstReverseIterator iter = *this;
+        --(*this);
+        return iter;
+    }
+
+    template <typename charType>
+    ConstReverseIterator<charType> &ConstReverseIterator<charType>::operator--()
+    {
+        ++current;
+        return *this;
+    }
+
+    template <typename charType>
+    ConstReverseIterator<charType> &ConstReverseIterator<charType>::operator--(int)
+    {
+        ConstReverseIterator iter = *this;
+        ++(*this);
+        return iter;
+    }
+
+    template <typename charType>
+    const charType &ConstReverseIterator<charType>::operator*() const
+    {
+        return *current;
+    }
+
+    template <typename charType>
+    charType *ConstReverseIterator<charType>::operator->() const
+    {
+        return current;
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator!=(const ConstReverseIterator &rhs) const
+    {
+        return current != rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator==(const ConstReverseIterator &rhs) const
+    {
+        return current == rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator<(const ConstReverseIterator &rhs) const
+    {
+        return current < rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator>(const ConstReverseIterator &rhs) const
+    {
+        return current > rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator<=(const ConstReverseIterator &rhs) const
+    {
+        return !(current > rhs.current);
+    }
+
+    template <typename charType>
+    bool ConstReverseIterator<charType>::operator>=(const ConstReverseIterator &rhs) const
+    {
+        return !(current < rhs.current);
+    }
+
+    // implementation end : ConstReverseIterator
+
+    template <typename charType>
+    class ReverseIterator : public ConstReverseIterator<charType>
+    {
+    public:
+        using Base = ConstReverseIterator<charType>;
+
+    public:
+        /**
+         *  @brief
+         *      Construct a new Reverse Iterator object
+         *
+         **/
+        ReverseIterator();
+
+        /**
+         *  @brief
+         *      Construct a new Reverse Iterator object
+         *
+         *  @param[in]  T*
+         **/
+        ReverseIterator(charType *);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return ReverseIterator&
+         **/
+        ReverseIterator &operator++();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return ReverseIterator&
+         **/
+        ReverseIterator &operator++(int);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return ReverseIterator&
+         **/
+        ReverseIterator &operator--();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return ReverseIterator&
+         **/
+        ReverseIterator &operator--(int);
+
+        /**
+         *  @brief
+         *      Overloading operator *
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType &operator*();
+
+        /**
+         * @brief
+         *      Overloading operator *
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType *operator->();
+    };
+
+    // implementation from ReverseIterator
+
+    template <typename charType>
+    ReverseIterator<charType>::ReverseIterator(charType *initLock) : Base(initLock)
+    {
+    }
+
+    template <typename charType>
+    ReverseIterator<charType> &ReverseIterator<charType>::operator++()
+    {
+        Base::operator++();
+        return *this;
+    }
+
+    template <typename charType>
+    ReverseIterator<charType> &ReverseIterator<charType>::operator++(int)
+    {
+        ReverseIterator iter = *this;
+        Base::operator++();
+        return iter;
+    }
+
+    template <typename charType>
+    ReverseIterator<charType> &ReverseIterator<charType>::operator--()
+    {
+        Base::operator--();
+        return *this;
+    }
+
+    template <typename charType>
+    ReverseIterator<charType> &ReverseIterator<charType>::operator--(int)
+    {
+        ReverseIterator iter = *this;
+        Base::operator--();
+        return iter;
+    }
+
+    template <typename charType>
+    charType &ReverseIterator<charType>::operator*()
+    {
+        return const_cast<charType &>(Base::operator*());
+    }
+
+    template <typename charType>
+    charType *ReverseIterator<charType>::operator->()
+    {
+        return const_cast<charType *>(Base::operator->());
+    }
+
 }
 
 namespace kor
@@ -402,6 +752,8 @@ namespace kor
         using pointer_type = charType *;
         using iterator = kor::Iterator<charType>;
         using const_iterator = kor::ConstIterator<charType>;
+        using reverse_iterator = kor::ReverseIterator<charType>;
+        using const_reverse_iterator = kor::ConstReverseIterator<charType>;
         using difference_type = ptrdiff_t;
 
     public:
@@ -495,7 +847,8 @@ namespace kor
         {
             std::unique_ptr<charType[]> _newCh = std::make_unique<charType[]>(_size + 1);
 
-            for(size_t i = 0; i < _size; ++i) {
+            for (size_t i = 0; i < _size; ++i)
+            {
                 _newCh[i] = _data[i];
             }
 
@@ -570,7 +923,7 @@ namespace kor
          *
          *  @return
          *      object from class Iterator
-        **/
+         **/
         template <typename U = charType>
         typename StringBase<U>::const_iterator begin() const
         {
@@ -584,7 +937,7 @@ namespace kor
          *
          *  @return
          *      object from class Iterator
-        **/
+         **/
         template <typename U = charType>
         typename StringBase<U>::const_iterator end() const
         {
@@ -593,6 +946,59 @@ namespace kor
 
         /**
          *  @brief
+         *      This method  a pointer that returns the ending point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::reverse_iterator rbegin()
+        {
+            return reverse_iterator(&_data.get()[_size - 1]);
+            
+        }
+
+        /**
+         *  @brief
+         *      This method a pointer that returns the starting point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::reverse_iterator rend()
+        {
+            return reverse_iterator(&_data.get()[0 - 1]);
+        }
+
+        /**
+         *  @brief
+         *      This method a const pointer that returns the ending
+         *      point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::const_reverse_iterator rbegin() const
+        {
+            return const_reverse_iterator(&_data.get()[_size - 1]);
+        }
+
+        /**
+         *  @brief
+         *      This method a const pointer that returns the starting
+         *      point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::const_reverse_iterator rend() const
+        {
+            return const_reverse_iterator(&_data.get()[0 - 1]);
+        }
+
         /**
          *  @brief
          *      This method takes the desired array element as a parameter.
