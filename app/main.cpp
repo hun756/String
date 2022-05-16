@@ -15,6 +15,10 @@ int main()
 
     kor::String str{"merhaba"};
 
+    std::cout << "Operator << " << str << std::endl;
+    str += " hi";
+    std::cout << "Operator << " << str << std::endl;
+
     std::cout << str.c_str() << std::endl;
     std::cout << str.size() << std::endl;
     std::cout << str.capacity() << std::endl;
@@ -24,7 +28,28 @@ int main()
     for (size_t i = 0; i < str.size(); ++i) {
         std::cout << _val[i] << std::endl;
     }
+    
+    int i = 1;
 
+    const char* cstring = str.c_str();
 
+    std::cout << "Addres is : " << reinterpret_cast<const void*>( cstring ) << std::endl;
+    std::cout << "Addres is : " << reinterpret_cast<const void*>( str.c_str() ) << std::endl;
+
+    // error printing m value from ascii
+    // std::cout << "Addres is : iterator begin " << (void*)(*(str.begin()))<< std::endl;
+
+    for (auto value = str.begin(); value != str.end(); ++value)
+    {
+        std::cout << &value << std::endl;
+        std::cout << *value << std::endl;
+        std::cout << i++ << std::endl;
+    }
+
+    for (kor::String::const_iterator value = str.begin(); value != str.end(); ++value)
+    {
+        std::cout << *value << std::endl;
+    }
+    
     return EXIT_SUCCESS;
-}
+} 

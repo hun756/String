@@ -61,12 +61,331 @@ namespace kor
     template <typename charType>
     class ConstIterator
     {
+    public:
+        /**
+         *  @brief
+         *      Construct a new Const Iterator object
+         *
+         */
+        ConstIterator();
+
+        /**
+         *  @brief
+         *      Construct a new Const Iterator object
+         *
+         */
+        ConstIterator(charType *);
+
+        /**
+         *  @brief
+         *      Construct a new Const Iterator object
+         *
+         *  @return ConstIterator&
+         *      Reference an object from class iterator.
+         **/
+        ConstIterator &operator++();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return
+         *      Ref Object from class iterator
+         **/
+        ConstIterator &operator++(int);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return
+         *      Object from class iterator
+         **/
+        ConstIterator &operator--();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return
+         *      Object from class iterator
+         **/
+        ConstIterator &operator--(int);
+
+        /**
+         *  @brief
+         *      Overloading operator *
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        const charType &operator*() const;
+
+        /**
+         *  @brief
+         *      Overloading operator ->
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType *operator->() const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator!=(const ConstIterator &) const;
+
+        /**
+         * @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator==(const ConstIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator<(const ConstIterator &) const;
+
+        /**
+         *  Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator>(const ConstIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator<=(const ConstIterator &) const;
+
+        /**
+         *  @brief
+         *      Overloading operator !=
+         *
+         *  @param[in] rhs
+         *
+         *  @retval
+         *      !(current == rhs.current)
+         **/
+        bool operator>=(const ConstIterator &) const;
+
+    private:
+        const charType *current;
     };
+
+    template <typename charType>
+    ConstIterator<charType>::ConstIterator(charType *initLock)
+    {
+        current = initLock;
+    }
+
+    template <typename charType>
+    ConstIterator<charType> &ConstIterator<charType>::operator++()
+    {
+        ++current;
+        return *this;
+    }
+
+    template <typename charType>
+    ConstIterator<charType> &ConstIterator<charType>::operator++(int)
+    {
+        ConstIterator iter = *this;
+        ++(*this);
+        return iter;
+    }
+
+    template <typename charType>
+    const charType &ConstIterator<charType>::operator*() const
+    {
+        return *current;
+    }
+
+    template <typename charType>
+    charType *ConstIterator<charType>::operator->() const
+    {
+        return current;
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator!=(const ConstIterator &rhs) const
+    {
+        return current != rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator==(const ConstIterator &rhs) const
+    {
+        return current == rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator<(const ConstIterator &rhs) const
+    {
+        return current < rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator>(const ConstIterator &rhs) const
+    {
+        return current > rhs.current;
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator<=(const ConstIterator &rhs) const
+    {
+        return !(current > rhs.current);
+    }
+
+    template <typename charType>
+    bool ConstIterator<charType>::operator>=(const ConstIterator &rhs) const
+    {
+        return !(current < rhs.current);
+    }
 
     template <typename charType>
     class Iterator : public ConstIterator<charType>
     {
+        using Base = ConstIterator<charType>;
+
+    public:
+        /**
+         *  @brief
+         *      Construct a new Iterator object
+         *
+         */
+        Iterator();
+
+        /**
+         * @brief
+         *      Construct a new Iterator object
+         *
+         * @param[in] initLock
+         */
+        Iterator(charType *initLock);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return Iterator&
+         */
+        Iterator &operator++();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return Iterator&
+         */
+        Iterator &operator++(int);
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (prefix)
+         *
+         *  @return Iterator&
+         */
+        Iterator &operator--();
+
+        /**
+         *  @brief
+         *      Overloading operator ++ (postfix)
+         *
+         *  @return Iterator&
+         */
+        Iterator &operator--(int);
+
+        /**
+         *  @brief
+         *      Overloading operator *
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType &operator*();
+
+        /**
+         *  @brief
+         *      Overloading operator ->
+         *
+         *  @return T&
+         *      Adress of template value. Return this value of adress.
+         **/
+        charType *operator->();
     };
+
+    template <typename charType>
+    Iterator<charType>::Iterator(charType *initLock) : Base(initLock)
+    {
+    }
+
+    template <typename charType>
+    Iterator<charType> &Iterator<charType>::operator++()
+    {
+        Base::operator++();
+        return *this;
+    }
+
+    template <typename charType>
+    Iterator<charType> &Iterator<charType>::operator++(int)
+    {
+        Iterator iter = *this;
+        Base::operator++();
+        return iter;
+    }
+
+    template <typename charType>
+    Iterator<charType> &Iterator<charType>::operator--()
+    {
+        Base::operator--();
+        return *this;
+    }
+
+    template <typename charType>
+    Iterator<charType> &Iterator<charType>::operator--(int)
+    {
+        Iterator iter = *this;
+        Base::operator--();
+        return iter;
+    }
+
+    template <typename charType>
+    charType &Iterator<charType>::operator*()
+    {
+        return const_cast<charType &>(Base::operator*());
+    }
+
+    template <typename charType>
+    charType *Iterator<charType>::operator->()
+    {
+        return const_cast<charType *>(Base::operator->());
+    }
 }
 
 namespace kor
@@ -74,6 +393,7 @@ namespace kor
     template <typename charType>
     class StringBase
     {
+    public:
         static_assert(kor::is_char<charType>, "String class works only with char");
 
         using reference = charType &;
@@ -214,6 +534,60 @@ namespace kor
          * @return size_t
          */
         size_t empty() const { return _size == 0; }
+
+        /**
+         *  @brief
+         *      This method  a pointer that returns the starting point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::iterator begin()
+        {
+            return iterator(&_data.get()[0]);
+        }
+
+        /**
+         *  @brief
+         *      This method a pointer that returns the ending point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+         **/
+        template <typename U = charType>
+        typename StringBase<U>::iterator end()
+        {
+            return iterator(&_data.get()[_size]);
+        }
+
+        /**
+         *  @brief
+         *      This method a const pointer that returns the ending
+         *      point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+        **/
+        template <typename U = charType>
+        typename StringBase<U>::const_iterator begin() const
+        {
+            return const_iterator(&_data.get()[0]);
+        }
+
+        /**
+         *  @brief
+         *      This method a const pointer that returns the ending
+         *      point of the string.
+         *
+         *  @return
+         *      object from class Iterator
+        **/
+        template <typename U = charType>
+        typename StringBase<U>::const_iterator end() const
+        {
+            return const_iterator(&_data.get()[_size]);
+        }
 
         ///< Overloading operators ...!
 
