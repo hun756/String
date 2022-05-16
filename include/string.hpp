@@ -830,12 +830,18 @@ namespace kor
     template <typename charType>
     charType &StringBase<charType>::operator[](std::size_t index)
     {
+        if (static_cast<__li>(index) < 0 || index >= _size)
+            throw std::out_of_range{"Error..! The index you want to reach is exceed the bounds of the array."};
+
         return _data.get()[index];
     }
 
     template <typename charType>
     const charType &StringBase<charType>::operator[](std::size_t index) const
     {
+        if (static_cast<__li>(index) < 0 || index >= _size)
+            throw std::out_of_range{"Error..! The index you want to reach is exceed the bounds of the array."};
+
         return _data.get()[index];
     }
 
