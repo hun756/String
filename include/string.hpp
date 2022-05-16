@@ -1,12 +1,12 @@
 #ifndef STRING_HPP_wt709n
 #define STRING_HPP_wt709n
 
-#include <type_traits>
 #include <memory>
 #include <cstring>
 
 #define DEFAULT_CAP 15
 #define CPP_2020_OR_HIGHER 202002L
+#define CPP_2017_OR_HIGHER 201703L
 
 #ifdef ENABLE_COMPABILITY_W_STD_STRING
 #include <string>
@@ -58,10 +58,13 @@ namespace kor
 
 namespace kor
 {
+    template <typename charType>
     class ConstIterator
     {
     };
-    class Iterator : public ConstIterator
+
+    template <typename charType>
+    class Iterator : public ConstIterator<charType>
     {
     };
 }
@@ -74,9 +77,9 @@ namespace kor
         static_assert(kor::is_char<charType>, "String class works only with char");
 
         using reference = charType &;
-        using ptr_type = charType *;
-        using iterator = kor::Iterator;
-        using const_iterator = kor::ConstIterator;
+        using pointer_type = charType *;
+        using iterator = kor::Iterator<charType>;
+        using const_iterator = kor::ConstIterator<charType>;
         using difference_type = ptrdiff_t;
 
     public:
@@ -100,7 +103,7 @@ namespace kor
 
         /**
          * @brief Construct a new String object
-         *  Fix undefined behaviour to pass nullptr_t to char*
+         *  Fix undefined behaviour to pass null_datat to char*
          *
          * @param nptr
          */
