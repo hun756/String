@@ -13,6 +13,10 @@
 #include <string>
 #endif
 
+#ifdef ENABLE_COMPABILITY_W_STD_VECTOR
+#include <vector>
+#endif
+
 namespace kor
 {
     template <class T>
@@ -838,6 +842,28 @@ namespace kor
 #if __GNUC__ || __MINGW32__ || __MINGW64__
 #pragma GCC diagnostic pop
 #endif
+
+        operator const char *() const noexcept
+        {
+            return this->_data.get();
+        }
+
+#ifdef ENABLE_COMPABILITY_W_STD_STRING
+        operator std::string() const
+        {
+            return std::string(_data.get());
+        }
+#endif
+
+#ifdef ENABLE_COMPABILITY_W_STD_VECTOR
+        template <typename U>
+        operator std::vector<U>() const noexcept
+        {
+            static_assert(kor::is_char<charType>, "Vector convension works only with char");
+            return std::vector<U>(&_data.get()[0], &_data.get()[_size]);
+        }
+#endif
+
         /**
          * @brief
          *
@@ -955,7 +981,6 @@ namespace kor
         typename StringBase<U>::reverse_iterator rbegin()
         {
             return reverse_iterator(&_data.get()[_size - 1]);
-            
         }
 
         /**

@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cstdlib>
 
+#define ENABLE_COMPABILITY_W_STD_VECTOR
+#define ENABLE_COMPABILITY_W_STD_STRING
+
 #include "string.hpp"
 #include "stringConfig.h"
-
 /*
  * Simple main program that demontrates how access
  * CMake definitions (here the version number) from source code.
@@ -62,6 +64,19 @@ int main()
     {
         std::cout << *value << std::endl;
     }
+
+    std::cout << "try vector convertion" << std::endl;
+
+    std::vector<char> charvec = str;
+
+    std::string _a = str;
+
+    std::cout << "converting to std_string = " << _a << std::endl;
+
+    for (size_t i = 0; i <charvec.size(); ++i) {
+        std::cout << charvec[i] << " , ";
+    }
+    std::cout << std::endl;
     
     return EXIT_SUCCESS;
 } 
