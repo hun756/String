@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <cstring>
+#include <stdexcept>
 
 #define DEFAULT_CAP 15
 #define CPP_2020_OR_HIGHER 202002L
@@ -54,6 +55,7 @@ namespace kor
     typedef unsigned long long __ull; ///< unsigned long long
     typedef long long __ll;           ///< long long
     typedef long double __ld;         ///< long double
+    typedef long int __li;            ///< long int
 }
 
 namespace kor
@@ -587,6 +589,94 @@ namespace kor
         typename StringBase<U>::const_iterator end() const
         {
             return const_iterator(&_data.get()[_size]);
+        }
+
+        /**
+         *  @brief
+        /**
+         *  @brief
+         *      This method takes the desired array element as a parameter.
+         *
+         *  @param[in]
+         *      It is the index of the directory to be accessed.
+         *
+         *  @return
+         *      T&  reference from template
+         **/
+        charType &at(std::size_t index)
+        {
+            return (*this)[index];
+        }
+
+        const charType &at(std::size_t index) const
+        {
+            return (*this)[index];
+        }
+
+        /**
+         * @brief
+         *  Appends the given string to this string.
+         *
+         * @param rhs
+         *  The value to add to the string.
+         *
+         * @return StringBase&
+         *  Returns the class's own reference.
+         */
+        StringBase &append(const StringBase &rhs)
+        {
+            (*this) += rhs;
+            return *this;
+        }
+
+        StringBase &append(const char *rhs)
+        {
+            if (rhs)
+                (*this) += rhs;
+
+            return *this;
+        }
+
+        StringBase &append(char ch)
+        {
+            (*this) += ch;
+            return *this;
+        }
+
+        /**
+         * @brief
+         *  Assigns a new value to the string, replacing its current contents.
+         *
+         * @param rhs
+         *  Another string object, whose value is either copied or moved.
+         *
+         * @return StringBase&
+         */
+        StringBase &assign(const StringBase &rhs)
+        {
+            (*this) = rhs;
+            return *this;
+        }
+
+        StringBase &assign(const char *rhs)
+        {
+            if (rhs)
+                (*this) = rhs;
+
+            return *this;
+        }
+
+        StringBase &assign(StringBase &&rhs) noexcept
+        {
+            (*this) = std::move(rhs);
+            return *this;
+        }
+
+        void swap(StringBase &str)
+        {
+            std::swap(_capacity, str._capacity);
+            std::swap(_size, str._size);
+            std::swap(_data, str._data);
         }
 
         ///< Overloading operators ...!
