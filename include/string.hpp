@@ -171,7 +171,12 @@ namespace kor
          */
         std::unique_ptr<charType[]> toCharArray()
         {
-            std::unique_ptr<charType[]> _newCh = std::move(_data);
+            std::unique_ptr<charType[]> _newCh = std::make_unique<charType[]>(_size + 1);
+
+            for(size_t i = 0; i < _size; ++i) {
+                _newCh[i] = _data[i];
+            }
+
             return _newCh;
         }
 
@@ -222,107 +227,107 @@ namespace kor
         charType &operator[](std::size_t idx);
         const charType &operator[](std::size_t idx) const;
 
-        template<charType>
-        friend std::ostream &operator<< (std::ostream &os, const StringBase &str);
+        template <charType>
+        friend std::ostream &operator<<(std::ostream &os, const StringBase &str);
 
-        template<charType>
+        template <charType>
         friend StringBase operator+(const StringBase &lhs, const StringBase &rhs);
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend StringBase operator+(const StringBase &lhs, const charType *rhs);
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend StringBase operator+(const charType *lhs, const StringBase &rhs);
-        template<charType>
+        template <charType>
         friend StringBase operator+(const StringBase &lhs, charType rhs);
-        template<charType>
+        template <charType>
         friend StringBase operator+(charType lhs, const StringBase &rhs);
-        template<charType>
+        template <charType>
         friend bool operator==(const StringBase &lhs, const StringBase &rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator==(const StringBase &lhs, const charType *rhs) noexcept;
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator==(const charType *lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator==(const StringBase &lhs, charType rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator==(charType lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator!=(const StringBase &lhs, const StringBase &rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator!=(const StringBase &lhs, const charType *rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator!=(const charType *lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator!=(const StringBase &lhs, charType rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator!=(charType lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator<(const StringBase &lhs, const StringBase &rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator<(const StringBase &lhs, const charType *rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator<(const charType *lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator<(const StringBase &lhs, charType rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator<(charType lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator>(const StringBase &lhs, const StringBase &rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator>(const StringBase &lhs, const charType *rhs) noexcept;
 
         /**
          * @todo
          *  Fix it : Undefined behavior if lhs is nullptr.
          */
-        template<charType>
+        template <charType>
         friend bool operator>(const charType *lhs, const StringBase &rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator>(const StringBase &lhs, charType rhs) noexcept;
-        template<charType>
+        template <charType>
         friend bool operator>(charType lhs, const StringBase &rhs) noexcept;
 
     private:
