@@ -859,11 +859,10 @@ namespace kor
         template <typename U>
         operator std::vector<U>() const noexcept
         {
-            static_assert(kor::is_char<charType>, "Vector convension works only with char");
+            static_assert(kor::is_char<U>, "Vector convension works only with char");
             return std::vector<U>(&_data.get()[0], &_data.get()[_size]);
         }
 #endif
-
         /**
          * @brief
          *
