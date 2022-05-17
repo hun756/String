@@ -76,6 +76,7 @@ int main()
     for (size_t i = 0; i <charvec.size(); ++i) {
         std::cout << charvec[i] << " , ";
     }
+    
     std::cout << std::endl;
     
     return EXIT_SUCCESS;

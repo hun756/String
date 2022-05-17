@@ -1,4 +1,8 @@
 #include <gtest/gtest.h>
+
+#define ENABLE_COMPABILITY_W_STD_VECTOR
+#define ENABLE_COMPABILITY_W_STD_STRING
+
 #include "string.hpp"
 #include <memory>
 #include <string>
@@ -36,7 +40,6 @@ TEST(String, CStrConstrucorTest)
         }
     }
 }
-
 
 /**
  * @brief Construct a new TEST object
@@ -82,4 +85,184 @@ TEST(String, SizeControl)
         ASSERT_EQ(val.str.length(), val.actual_length) << index;
         ++index;
     }
+}
+
+TEST(String, ConvensionSTDString)
+{
+    kor::String str {"hi everyone"};
+    std::string stdStr = str;
+
+    ASSERT_EQ(stdStr.size(), str.size());
+    ASSERT_EQ(stdStr.capacity(), str.capacity());
+    ASSERT_STREQ(stdStr.c_str(), str.c_str());
+}
+
+// TEST(String, ConvensionSTDVector)
+// {
+//     kor::String str {"hi everyone"};
+//     str += "hi everyone, hi everyone";
+
+//     std::vector<char> strVec = str;
+
+//     ASSERT_EQ(strVec.size(), str.size());
+
+//     size_t index = 0;
+//     for (size_t i = 0; i < strVec.size(); ++i) {
+//         ASSERT_EQ(strVec[i], str[i]) << index;
+//         ++index;
+//     }
+// }
+
+
+TEST(String, OperatorPlusEq)
+{
+    kor::String str {"hi everyone"};
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(11));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(15));
+
+    str += "0000";
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(15));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(15));
+
+    str += "0";
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(16));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(30));
+
+    str += "000";
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(19));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(30));
+
+    str += '0';
+    ASSERT_EQ(str.size(), static_cast<size_t>(20));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(30));
+
+    str += "0000000000";
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(30));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(30));
+
+    str += '0';
+
+    ASSERT_EQ(str.size(), static_cast<size_t>(31));
+    ASSERT_EQ(str.capacity(), static_cast<size_t>(31));
+
+    std::string _str {"hi everyone"};
+
+    for(int i = 0; i < 20; i++) {
+        _str += '0';
+    }
+
+    ASSERT_EQ(str.size(), _str.size());
+
+    size_t index = 0;
+    for(size_t i = 0; i < str.size(); i++) {
+        ASSERT_EQ(str[i], _str[i]) << index;
+        ++index;
+    }
+}
+
+TEST(String, IteratorTest) {
+    kor::String kStr {"00000000000000000000000000000000000000000000000000000000000000000000000000000000000"};
+    std::string stdStr {"00000000000000000000000000000000000000000000000000000000000000000000000000000000000"};
+
+    ASSERT_EQ(kStr.size(), stdStr.size());
+
+    auto val = kStr.begin(); 
+    auto val2 = stdStr.begin();
+
+    for (; val != kStr.end() && val2 != stdStr.end(); ++val, ++val2) {
+        ASSERT_EQ(*val, *val2);
+    }
+
+    kor::String::const_iterator val3 = kStr.begin();
+    std::string::const_iterator val4 = stdStr.begin();
+
+    for (; val3 != kStr.end() && val4 != stdStr.end(); ++val3, ++val4) {
+        ASSERT_EQ(*val3, *val4);
+    }
+
+    kor::String::reverse_iterator val5 = kStr.rbegin();
+    std::string::reverse_iterator val6 = stdStr.rbegin();
+
+    for (; val5 != kStr.rend() && val6 != stdStr.rend(); ++val5, ++val6) {
+        ASSERT_EQ(*val5, *val6);
+    }
+
+    kor::String::const_reverse_iterator val7 = kStr.rbegin();
+    std::string::const_reverse_iterator val8 = stdStr.rbegin();
+
+    for (; val7 != kStr.rend() && val8 != stdStr.rend(); ++val7, ++val8) {
+        ASSERT_EQ(*val7, *val8);
+    }
+}
+
+TEST(String, OperatorLess) 
+{
+    kor::String str1 {"a"};
+    kor::String str2 {"b"};
+
+    std::string str3 {"a"};
+    std::string str4 {"b"};
+
+    ASSERT_TRUE(str1 < str2);
+    ASSERT_TRUE(str3 < str4);
+
+    str1 = "11111111111111111111111111111111111111111111111111111111111111111111111111110";
+    str2 = "11111111111111111111111111111111111111111111111111111111111111111111111111111";
+
+    str3 = "11111111111111111111111111111111111111111111111111111111111111111111111111110";
+    str4 = "11111111111111111111111111111111111111111111111111111111111111111111111111111";
+
+    ASSERT_TRUE(str1 < str2);
+    ASSERT_TRUE(str3 < str4);
+
+    str1 = "a0000000000000000000000000000000000000000000000000";
+    str2 = "z0000000000000000000000000000000000000000000000000";
+
+    ASSERT_TRUE(str1 < str2);
+}
+
+TEST(String, OperatorGreat) 
+{
+    kor::String str1 {"b"};
+    kor::String str2 {"a"};
+
+    ASSERT_TRUE(str1 > str2);
+
+    str1 = "11111111111111111111111111111111111111111111111111111111111111111111111111111";
+    str2 = "11111111111111111111111111111111111111111111111111111111111111111111111111110";
+
+    ASSERT_TRUE(str1 > str2);
+
+    str1 = "z0000000000000000000000000000000000000000000000000";
+    str2 = "a0000000000000000000000000000000000000000000000000";
+    
+    ASSERT_TRUE(str1 > str2);
+}
+
+TEST(String, OperatorEq) 
+{
+    kor::String str1 {"a"};
+    kor::String str2 {"a"};
+
+    ASSERT_TRUE(str1 == str2);
+
+    str1 = "11111111111111111111111111111111111111111111111111111111111111111111111111111";
+    str2 = "11111111111111111111111111111111111111111111111111111111111111111111111111110";
+
+    ASSERT_TRUE(!(str1 == str2));
+
+    str1 = "z0000000000000000000000000000000000000000000000000";
+    str2 = "a0000000000000000000000000000000000000000000000000";
+
+    ASSERT_FALSE(str1 == str2);
+
+    str1 = "a00b0x0h0000a0000000u00y00000b0000f000000z0000000000";
+    str2 = "a00b0x0h0000a0000000u00y00000b0000f000000z0000000000";
+    
+    ASSERT_TRUE(str1 == str2);
 }
