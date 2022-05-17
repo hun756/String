@@ -1234,9 +1234,9 @@ namespace kor
 
         void _h_allocate_len_control()
         {
-            if (_size < DEFAULT_CAP)
+            if (_size <= DEFAULT_CAP)
                 _capacity = DEFAULT_CAP;
-            else if (_size < DEFAULT_CAP * 2)
+            else if (_size <= DEFAULT_CAP * 2)
                 _capacity = DEFAULT_CAP * 2;
             else
                 _capacity = _size;
@@ -1333,6 +1333,7 @@ namespace kor
     template <typename charType>
     StringBase<charType> &StringBase<charType>::operator+=(charType rhs)
     {
+        auto tempSize = _size;
         _size += 1;
 
         _h_allocate_len_control();
@@ -1340,9 +1341,8 @@ namespace kor
         if (_size < DEFAULT_CAP * 2)
             reAlloc();
 
-        _data.get()[_size] = rhs;
-        _data.get()[_size + 1] = 0x00;
-        _size += 1;
+        _data.get()[tempSize] = rhs;
+        _data.get()[_size] = 0x00;
 
         return *this;
     }
